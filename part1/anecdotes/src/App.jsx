@@ -11,33 +11,47 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
-  // const points = 
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState(Array(anecdotes.length).fill(0))
-  let check = 0;
+  const [highestVote, setHighestVotes] = useState(-1)
+  const [index, setVoteIndex] = useState(-1)
+
+  let previousRandom = -1;
   let randomSelection = () => {
-    let temp = Math.round(Math.random() * (anecdotes.length-1));
-    if(temp==check){
-      randomSelection();
-    }
-    console.log(temp);
-    return temp;
+    let currentRandom;
+    do {
+      currentRandom = Math.round(Math.random() * (anecdotes.length - 1));
+    } while (previousRandom == currentRandom);
+    previousRandom = currentRandom;
+    setSelected(currentRandom);
   };
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       <p>has {points[selected]} votes</p>
       <br />
       <button onClick={
-        ()=>{
-          let copy = [...points];
+        () => {
+          const copy = [...points];
           copy[selected] += 1;
           setPoints(copy);
+          if (copy[selected] > highestVote){
+            setHighestVotes(copy[selected]);
+            setVoteIndex(selected);
+          }
         }
       }> Vote </button>
-      <button onClick={() => setSelected(randomSelection)}> next anecdote</button>
-
-      
+      <button onClick={randomSelection}> next anecdote</button>
+      <br />
+      {highestVote !== -1 ? (
+        <>
+          <h1>Anecdote with the most votes</h1>
+          {anecdotes[index]}
+        </>
+      ) : (
+        <p>Vote to highlight your favorite quote!</p>
+      )}
     </div>
 
   )
