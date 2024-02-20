@@ -4,7 +4,7 @@ Solutions to exercises in [Full Stack Open](https://fullstackopen.com/en) 2024
 
 ## Curriculum
 
-- [ ] Part 0: Fundamentals of Web apps
+- [x] [Part 0: Fundamentals of Web apps](./part0)
 - [x] [Part 1: Introduction to React](./part1)
 - [ ] Part 2: Communicating with Server
 - [ ] Part 3: Programming a server with NodeJS and Express
